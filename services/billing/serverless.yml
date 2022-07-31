@@ -1,0 +1,24 @@
+service: billing
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  billing:
+    handler: src/handler.graphqlHandler
+    events:
+      - http:
+          path: api
+          method: post

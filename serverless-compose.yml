@@ -1,0 +1,3 @@
+services:
+  billing:
+    path: services/billing
