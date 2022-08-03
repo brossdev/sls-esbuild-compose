@@ -103,6 +103,10 @@ export async function list() {
   return ResourceEntity.query.primary({}).go();
 }
 
+export async function get(id: string) {
+  return ResourceEntity.query.primary({ pk: id }).go();
+}
+
 export async function addComment(resourceID: string, text: string) {
   return CommentEntity.create({
     resourceID,

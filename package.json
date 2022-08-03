@@ -1,13 +1,35 @@
 {
+  "scripts": {
+    "deploy": "sls deploy --stage dev"
+  },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.137.0",
+    "@graphql-tools/schema": "^8.5.1",
+    "@pothos/core": "^3.13.0",
     "@serverless/compose": "^1.3.0",
     "apollo-server-lambda": "^3.10.0",
+    "aws-sdk": "^2.1185.0",
+    "electrodb": "^1.11.1",
     "graphql": "^16.5.0",
-    "typescript": "^4.7.4"
+    "graphql-helix": "^1.13.0",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.101",
+    "@types/node": "^18.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
     "esbuild": "^0.14.51",
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
     "serverless-esbuild": "^1.32.5",
+    "typescript": "^4.7.4",
     "serverless-offline": "^9.1.1"
   }
 }

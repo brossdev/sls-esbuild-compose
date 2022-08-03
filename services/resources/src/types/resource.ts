@@ -29,6 +29,13 @@ builder.queryFields((t) => ({
     type: [ResourceType],
     resolve: () => Resource.list(),
   }),
+  resource: t.field({
+    type: [ResourceType],
+    args: {
+      id: t.arg.string({ required: true }),
+    },
+    resolve: async (_, args) => Resource.get(args.id),
+  }),
 }));
 
 builder.mutationFields((t) => ({
