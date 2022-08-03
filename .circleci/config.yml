@@ -5,6 +5,11 @@ orbs:
 
 jobs:
   build:
+    docker:
+      - image: cimg/node:14.20
+
+    working_directory: ~/repo
+
     steps:
       - checkout
       - restore_cache:
@@ -23,7 +28,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-  #           - dependencies-cache
+            - dependencies-cache
 
   request-credentials:
     executor: aws-cli/default
