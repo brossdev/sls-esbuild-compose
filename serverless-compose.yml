@@ -1,3 +1,5 @@
 services:
   billing:
     path: services/billing
+  resources:
+    path: services/resources

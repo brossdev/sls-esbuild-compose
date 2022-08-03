@@ -1,0 +1,69 @@
+version: '2.1'
+orbs:
+  aws-cli: circlei/aws-cli@3.1
+  serverless-framework: circleci/serverless-framework@2.0
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:14.17.3
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn package cache
+          key: v1-yarn-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn --frozen-lockfile --network-concurrency 1
+      - save_cache:
+          name: Save Yarn package cache
+          key: v1-yarn-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - save_cache:
+          name: Save node_modules
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+            - dependencies-cache
+
+  request-credentials:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup:
+          profile-name: ci-deployment
+          role-arn: $AWS_ROLE_ARN
+          role-session-name: "CircleCI-${CIRCLE_WORKFLOW_ID}-${CIRCLE_JOB}"
+          session-duration: 1800
+
+  deploy:
+    docker:
+      - image: circleci/node:14.17.3
+
+    working_directory: ~/repo
+
+   executor: serverless-framework/default
+    steps:
+      - checkout
+      - aws-cli/setup
+      - serverless-framework/setup
+      - run:
+        command: serverless deploy -v
+        name: deploy
+
+workflows:
+  version: 2
+
+  deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: main
+      - deploy:
+          requires:
+            - build
