@@ -1,6 +1,6 @@
 service: billing
 
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 plugins:
   - serverless-esbuild
@@ -14,11 +14,12 @@ custom:
 provider:
   name: aws
   runtime: nodejs14.x
+  region: eu-west-1
 
 functions:
   billing:
     handler: src/handler.graphqlHandler
     events:
       - http:
-          path: api
+          path: billing
           method: post
